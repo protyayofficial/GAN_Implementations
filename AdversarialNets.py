@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+import os
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -118,21 +119,27 @@ class Discriminator(nn.Module):
 
 def save_image_grid(epoch, images, ncol):
     """
-    Save a grid of generated images to a file.
+    Save a grid of generated images to a file in the 'results' folder.
 
     Parameters:
     - epoch (int): Current epoch number.
     - images (Tensor): Generated images.
     - ncol (int): Number of columns in the image grid.
     """
+    # Create the results directory if it doesn't exist
+    os.makedirs('results', exist_ok=True)
+    
+    # Generate the image grid
     image_grid = make_grid(images, ncol)
     image_grid = image_grid.permute(1, 2, 0).cpu().detach().numpy()
     
+    # Plot and save the image grid
     plt.imshow(image_grid)
     plt.xticks([])
     plt.yticks([])
-    plt.savefig(f'generated_{epoch:03d}.jpg')
+    plt.savefig(f'results/generated_{epoch:03d}.jpg')
     plt.close()
+
 
 def main():
     """

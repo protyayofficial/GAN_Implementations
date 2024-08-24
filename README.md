@@ -6,6 +6,16 @@ Welcome to the GAN Architectures Implementation repository! This project provide
 
 This repository includes implementations of several GAN architectures. Each architecture has been implemented in a modular and extensible manner, allowing for easy experimentation and comparison.
 
+## Included Architectures
+
+- **[Vanilla GAN](./AdversarialNets.py)**: A basic GAN model as introduced by Goodfellow et al. in their original paper.
+<!-- - **Deep Convolutional GAN (DCGAN)**: An improvement over the vanilla GAN by using convolutional layers, which helps in generating more realistic images.
+<!-- - **Conditional GAN (cGAN)**: A GAN variant where the generator and discriminator receive additional information (e.g., class labels) to condition the generation process.
+- **Wasserstein GAN (WGAN)**: An alternative to the traditional GANs that uses the Wasserstein distance to improve training stability and the quality of generated samples.
+- **Wasserstein GAN with Gradient Penalty (WGAN-GP)**: An enhanced version of WGAN that includes a gradient penalty term to further stabilize the training process.
+- **Least Squares GAN (LSGAN)**: A GAN variant that uses least squares loss instead of binary cross-entropy, aiming to address some of the issues with vanishing gradients. -->
+- More architectures to be included soon...
+
 ## Motivation
 As a passionate enthusiast of Computer Vision, I have always been fascinated by the field’s potential to transform how machines perceive and interact with the world. The ability to enable computers to understand and generate visual content opens up countless possibilities for innovation across various domains, from healthcare to entertainment.
 
@@ -14,8 +24,6 @@ My journey into Computer Vision began with a deep curiosity about how algorithms
 The goal of this project is to develop and refine Generative Adversarial Networks (GANs) for image colorization, leveraging their power to generate photorealistic colored images from grayscale inputs. By implementing and experimenting with different GAN architectures, I aim to push the boundaries of what’s possible in automated image colorization and contribute valuable insights to the field.
 
 This project is a significant step towards my ambition of becoming a Computer Vision Researcher. It provides an opportunity to deepen my understanding of advanced generative models, enhance my technical skills, and contribute to the growing body of research in image generation. I am excited to continue exploring innovative solutions in Computer Vision and to contribute to the development of technologies that can profoundly impact our interaction with visual data.
-
-
 
 ## Basics of GANs
 **Generative Adversarial Networks (GANs)** are a class of machine learning frameworks introduced by Ian Goodfellow and his colleagues in 2014. GANs consist of two neural networks: the generator and the discriminator, which are trained simultaneously through adversarial processes. The key idea is to have these two networks compete with each other, leading to improved performance and generation of high-quality data.
@@ -49,16 +57,6 @@ GANs are used in various applications, including:
 - Text-to-image synthesis
 
 GANs have become a foundational technology in generative models and continue to be an active area of research and development.
-
-## Included Architectures
-
-- **Vanilla GAN**: A basic GAN model as introduced by Goodfellow et al. in their original paper.
-<!-- - **Deep Convolutional GAN (DCGAN)**: An improvement over the vanilla GAN by using convolutional layers, which helps in generating more realistic images.
-- **Conditional GAN (cGAN)**: A GAN variant where the generator and discriminator receive additional information (e.g., class labels) to condition the generation process.
-- **Wasserstein GAN (WGAN)**: An alternative to the traditional GANs that uses the Wasserstein distance to improve training stability and the quality of generated samples.
-- **Wasserstein GAN with Gradient Penalty (WGAN-GP)**: An enhanced version of WGAN that includes a gradient penalty term to further stabilize the training process.
-- **Least Squares GAN (LSGAN)**: A GAN variant that uses least squares loss instead of binary cross-entropy, aiming to address some of the issues with vanishing gradients. -->
-- More architectures to be included soon...
 
 ## Contributing
 Contributions are welcome! If you would like to contribute to this repository, please fork the repository and submit a pull request with your proposed changes. Make sure to follow the coding standards and provide clear descriptions of your changes.
