@@ -8,7 +8,7 @@ This repository includes implementations of several GAN architectures. Each arch
 
 ## Included Architectures
 
-- **[Vanilla GAN](./AdversarialNets.py)**: A basic GAN model as introduced by Goodfellow et al. in their original paper.
+- **[Vanilla GAN](./models/AdversarialNets.py)**: A basic GAN model as introduced by Goodfellow et al. in their original paper.
 <!-- - **Deep Convolutional GAN (DCGAN)**: An improvement over the vanilla GAN by using convolutional layers, which helps in generating more realistic images.
 <!-- - **Conditional GAN (cGAN)**: A GAN variant where the generator and discriminator receive additional information (e.g., class labels) to condition the generation process.
 - **Wasserstein GAN (WGAN)**: An alternative to the traditional GANs that uses the Wasserstein distance to improve training stability and the quality of generated samples.
@@ -26,12 +26,12 @@ You can use the `train_{gan}.sh` script to start training the GAN model with a s
 
 1. **Make the script executable** (if you haven't already):
     ```bash
-    chmod +x train_{gan}.sh
+    chmod +x scripts/train_{gan}.sh
     ```
 
 2. **Run the script**:
     ```bash
-    ./train_{gan}.sh
+    ./scripts/train_{gan}.sh
     ```
 
 ## Motivation
