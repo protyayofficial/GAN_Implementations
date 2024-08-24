@@ -16,6 +16,24 @@ This repository includes implementations of several GAN architectures. Each arch
 - **Least Squares GAN (LSGAN)**: A GAN variant that uses least squares loss instead of binary cross-entropy, aiming to address some of the issues with vanishing gradients. -->
 - More architectures to be included soon...
 
+## Running the GAN Training Script
+
+To streamline the process of training the GAN model, we have included a shell script, `train_gan.sh`, in the repository. This script is designed to execute the GAN training with pre-configured default settings for parameters like batch size, learning rate, number of epochs, and more.
+
+### Usage
+
+You can use the `train_{gan}.sh` script to start training the GAN model with a simple command. Follow these steps:
+
+1. **Make the script executable** (if you haven't already):
+    ```bash
+    chmod +x train_{gan}.sh
+    ```
+
+2. **Run the script**:
+    ```bash
+    ./train_{gan}.sh
+    ```
+
 ## Motivation
 As a passionate enthusiast of Computer Vision, I have always been fascinated by the field’s potential to transform how machines perceive and interact with the world. The ability to enable computers to understand and generate visual content opens up countless possibilities for innovation across various domains, from healthcare to entertainment.
 

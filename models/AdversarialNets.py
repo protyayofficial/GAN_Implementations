@@ -210,7 +210,7 @@ def main():
         # Save generated images every 20 epochs
         generator.eval()
         if epoch % 20 == 0:
-            save_image_grid(epoch + 1, fake_images, ncol=8)
+            save_image_grid(epoch, fake_images, ncol=8)
 
 if __name__ == "__main__":
     main()
