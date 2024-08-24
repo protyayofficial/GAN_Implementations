@@ -36,15 +36,15 @@ This project is a significant step towards my ambition of becoming a Computer Vi
 ## Training Process
 During training, the generator and discriminator are engaged in a two-player minimax game:
 
--**Generator’s Objective**: The generator aims to fool the discriminator into believing that its generated data is real. It tries to minimize the discriminator's ability to correctly classify generated data as fake.
-
--**Discriminator’s Objective**: The discriminator aims to correctly classify real and fake data. It tries to maximize its accuracy in identifying which data is real and which is generated.
+- **Generator’s Objective**: The generator aims to fool the discriminator into believing that its generated data is real. It tries to minimize the discriminator's ability to correctly classify generated data as fake.
+ 
+- **Discriminator’s Objective**: The discriminator aims to correctly classify real and fake data. It tries to maximize its accuracy in identifying which data is real and which is generated.
 
 The training process involves:
 
--**Step 1**: The discriminator is trained with real data and fake data from the generator. It learns to differentiate between the two.
+- **Step 1**: The discriminator is trained with real data and fake data from the generator. It learns to differentiate between the two.
 
--**Step 2**: The generator is trained to produce data that the discriminator classifies as real. It improves by receiving feedback from the discriminator’s judgments.
+- **Step 2**: The generator is trained to produce data that the discriminator classifies as real. It improves by receiving feedback from the discriminator’s judgments.
 
 Over time, both networks improve: the generator produces increasingly realistic data, and the discriminator becomes better at identifying the nuances between real and fake data. This adversarial process continues until the generator produces data that is almost indistinguishable from real data, and the discriminator cannot reliably tell the difference.
 
