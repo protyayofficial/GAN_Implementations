@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
 import os
+import shutil
+
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -12,6 +13,7 @@ from torch.optim import Adam
 from tqdm import tqdm
 import argparse
 import random
+from PIL import Image, ImageSequence
 
 def set_seed(seed):
     """
@@ -39,9 +41,10 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=64, help="Batch size for training.")
     parser.add_argument('--g_lr', type=float, default=0.0001, help="Learning rate for the Generator.")
     parser.add_argument('--d_lr', type=float, default=0.0001, help="Learning rate for the Discriminator.")
-    parser.add_argument('--epochs', type=int, default=500, help="Number of epochs to train.")
+    parser.add_argument('--epochs', type=int, default=100, help="Number of epochs to train.")
     parser.add_argument('--sample_size', type=int, default=100, help="Size of the random noise vector (latent space).")
     parser.add_argument('--seed', type=int, default=9, help="Seed for reproducibility.")
+    parser.add_argument('--output_dir', type=str, default='results/AdversarialNets', help="Directory to save the generated GIF and images.")
     return parser.parse_args()
 
 class Generator(nn.Module):
@@ -134,11 +137,45 @@ def save_image_grid(epoch, images, ncol):
     image_grid = image_grid.permute(1, 2, 0).cpu().detach().numpy()
     
     # Plot and save the image grid
-    plt.imshow(image_grid)
+    plt.imshow(image_grid, cmap='gray')
     plt.xticks([])
     plt.yticks([])
-    plt.savefig(f'results/generated_{epoch:03d}.jpg')
+    plt.savefig(f'results/AdversarialNets_{epoch:03d}.jpg')
     plt.close()
+
+def create_gif_and_move(output_dir):
+    """
+    Create a GIF from the saved images and move all images and GIF to the specified output directory.
+    
+    Parameters:
+    - output_dir (str): Directory where the GIF and images should be moved.
+    """
+    # Ensure the output directory exists
+    os.makedirs(output_dir, exist_ok=True)
+    
+    # Create a list to hold the images for the GIF
+    images = []
+    
+    # Iterate over the image files in the 'results' directory
+    for filename in sorted(os.listdir('results')):
+        # Only process .jpg or .png files
+        if 'AdversarialNets' in filename and filename.endswith('.jpg') or filename.endswith('.png'):
+            img = Image.open(os.path.join('results', filename))
+            images.append(img)
+    
+    # Create the GIF and save it in the output directory
+    gif_path = os.path.join(output_dir, 'AdversarialNets_MNIST.gif')
+    if images:
+        images[0].save(gif_path, save_all=True, append_images=images[1:], duration=200, loop=0)
+    
+    # Now move all the image files and the GIF into the output directory
+    for img_file in os.listdir('results'):
+        # Ensure we're only moving files and not directories or invalid paths
+        src_path = os.path.join('results', img_file)
+        dest_path = os.path.join(output_dir, img_file)
+        
+        if os.path.isfile(src_path):  # Check if it's a file, not a directory
+            shutil.move(src_path, dest_path)
 
 
 def main():
@@ -147,19 +184,30 @@ def main():
     """
     args = parse_args()
 
+    # Set device
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    
+    # Set seed for reproducibility
     set_seed(args.seed)
 
-    real_labels = torch.ones(args.batch_size, 1)
-    fake_labels = torch.zeros(args.batch_size, 1)
+    # Create real and fake labels with label smoothing
+    real_label_value = 1.0
+    fake_label_value = 0.0
+    
+    # Create models
+    generator = Generator(sample_size=args.sample_size).to(device)
+    discriminator = Discriminator().to(device)
 
-    generator = Generator(sample_size=args.sample_size)
-    discriminator = Discriminator()
-
+    # Optimizers
     g_optim = Adam(generator.parameters(), lr=args.g_lr, betas=(0.5, 0.999))
     d_optim = Adam(discriminator.parameters(), lr=args.d_lr, betas=(0.5, 0.999))
+    
+    # Loss function
+    criterion = nn.BCELoss()
 
+    # Transform and dataset
     transform = transforms.Compose([
-        transforms.ToTensor(), 
+        transforms.ToTensor(),
         transforms.Normalize((0.5,), (0.5,))
     ])
     dataset = datasets.MNIST(root="./data", train=True, download=True, transform=transform)
@@ -170,6 +218,13 @@ def main():
         g_losses = []
 
         for images, _ in tqdm(dataloader):
+            images = images.to(device)
+            batch_size = images.size(0)
+
+            # Create real and fake labels
+            real_labels = torch.full((batch_size, 1), real_label_value).to(device)
+            fake_labels = torch.full((batch_size, 1), fake_label_value).to(device)
+
             # =======================
             # Train Discriminator
             # =======================
@@ -177,13 +232,13 @@ def main():
 
             # Real images
             d_loss_real = discriminator(images)
-            real_loss = nn.BCELoss()(d_loss_real, real_labels)
+            real_loss = criterion(d_loss_real, real_labels)
 
             # Generated images
-            noise = torch.randn(args.batch_size, args.sample_size)
+            noise = torch.randn(batch_size, args.sample_size).to(device)
             fake_images = generator(noise)
             d_loss_fake = discriminator(fake_images.detach())
-            fake_loss = nn.BCELoss()(d_loss_fake, fake_labels)
+            fake_loss = criterion(d_loss_fake, fake_labels)
 
             # Total Discriminator loss
             d_loss = real_loss + fake_loss
@@ -196,7 +251,7 @@ def main():
             # =======================
             generator.train()
             g_loss = discriminator(fake_images)  # Generated images again
-            g_loss = nn.BCELoss()(g_loss, real_labels)
+            g_loss = criterion(g_loss, real_labels)
 
             g_optim.zero_grad()
             g_loss.backward()
@@ -207,10 +262,11 @@ def main():
 
         print(f"Epoch [{epoch + 1}/{args.epochs}], D Loss: {np.mean(d_losses):.4f}, G Loss: {np.mean(g_losses):.4f}")
 
-        # Save generated images every 20 epochs
+        # Save generated images every epoch
         generator.eval()
-        if epoch % 20 == 0:
-            save_image_grid(epoch, fake_images, ncol=8)
+        save_image_grid(epoch, fake_images, ncol=8)
+
+    create_gif_and_move(args.output_dir)
 
 if __name__ == "__main__":
     main()

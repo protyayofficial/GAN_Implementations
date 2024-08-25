@@ -9,6 +9,7 @@ DISCRIMINATOR_LR=0.0001
 EPOCHS=100
 SAMPLE_SIZE=100
 SEED=9
+OUTPUT_DIR='results/AdversarialNets'
 
 # Execute the training script with arguments
 python3 models/AdversarialNets.py \
@@ -17,4 +18,5 @@ python3 models/AdversarialNets.py \
     --d_lr $DISCRIMINATOR_LR \
     --epochs $EPOCHS \
     --sample_size $SAMPLE_SIZE \
-    --seed $SEED
+    --seed $SEED \
+    --output_dir $OUTPUT_DIR
