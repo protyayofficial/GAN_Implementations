@@ -10,10 +10,10 @@ This repository includes implementations of several GAN architectures. Each arch
 
 - **[Vanilla GAN](./models/AdversarialNets.py)**: A basic GAN model as introduced by Goodfellow et al. in their original paper.
 - **[Deep Convolutional GAN (DCGAN)](./models/DCGAN.py)**: An improvement over the vanilla GAN by using convolutional layers for both generators and discriminators, which helps in generating more realistic images.
-<!-- - **Conditional GAN (cGAN)**: A GAN variant where the generator and discriminator receive additional information (e.g., class labels) to condition the generation process.
+<!-- - **Conditional GAN (cGAN)**: A GAN variant where the generator and discriminator receive additional information (e.g., class labels) to condition the generation process. -->
 - **Wasserstein GAN (WGAN)**: An alternative to the traditional GANs that uses the Wasserstein distance to improve training stability and the quality of generated samples.
 - **Wasserstein GAN with Gradient Penalty (WGAN-GP)**: An enhanced version of WGAN that includes a gradient penalty term to further stabilize the training process.
-- **Least Squares GAN (LSGAN)**: A GAN variant that uses least squares loss instead of binary cross-entropy, aiming to address some of the issues with vanishing gradients. -->
+<!-- - **Least Squares GAN (LSGAN)**: A GAN variant that uses least squares loss instead of binary cross-entropy, aiming to address some of the issues with vanishing gradients. -->
 - More architectures to be included soon...
 
 ## Running the GAN Training Script
@@ -89,6 +89,8 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 - [PyTorch](https://pytorch.org/): An open-source machine learning library used for the implementations.
 - [Generative Adversarial Nets by Goodfellow _et al._](https://arxiv.org/pdf/1406.2661) The original paper that introduced GAN to the whole world in 2014.
 - [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks by Radford _et al._](https://arxiv.org/pdf/1511.06434) - DCGAN
+- [Wasserstein GAN by Arjovsky _et al._](https://arxiv.org/pdf/1701.07875) - WGAN
+- [Improved Training of Wasserstein GANs by Gulrajani _et al._](https://arxiv.org/pdf/1704.00028) - WGAN with Gradient Penalty
 
 ## Contact
 If you have any questions or suggestions, feel free to reach out!
