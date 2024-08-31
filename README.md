@@ -11,8 +11,8 @@ This repository includes implementations of several GAN architectures. Each arch
 - **[Vanilla GAN](./models/AdversarialNets.py)**: A basic GAN model as introduced by Goodfellow et al. in their original paper.
 - **[Deep Convolutional GAN (DCGAN)](./models/DCGAN.py)**: An improvement over the vanilla GAN by using convolutional layers for both generators and discriminators, which helps in generating more realistic images.
 <!-- - **Conditional GAN (cGAN)**: A GAN variant where the generator and discriminator receive additional information (e.g., class labels) to condition the generation process. -->
-- **Wasserstein GAN (WGAN)**: An alternative to the traditional GANs that uses the Wasserstein distance to improve training stability and the quality of generated samples.
-- **Wasserstein GAN with Gradient Penalty (WGAN-GP)**: An enhanced version of WGAN that includes a gradient penalty term to further stabilize the training process.
+- **[Wasserstein GAN (WGAN)](./models/WGAN.py)**: An alternative to the traditional GANs that uses the Wasserstein distance to improve training stability and the quality of generated samples.
+- **[Wasserstein GAN with Gradient Penalty (WGAN-GP)](./models/WGAN-GP.py)**: An enhanced version of WGAN that includes a gradient penalty term to further stabilize the training process.
 <!-- - **Least Squares GAN (LSGAN)**: A GAN variant that uses least squares loss instead of binary cross-entropy, aiming to address some of the issues with vanishing gradients. -->
 - More architectures to be included soon...
 
